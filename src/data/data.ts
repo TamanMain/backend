@@ -3,6 +3,7 @@ export default {
     {
       _id: 0,
       name: "Nanas Madu",
+      type: "fruit",
       quantity: 1,
       unit: "buah",
       price: 1234567890,
@@ -16,6 +17,7 @@ export default {
     {
       _id: 1,
       name: "Mangga Harum Manis",
+      type: "fruit",
       quantity: 500,
       unit: "gram",
       price: 14300,
@@ -24,6 +26,7 @@ export default {
     {
       _id: 2,
       name: "Kembang Kol",
+      type: "vegetable",
       quantity: 250,
       unit: "gram",
       price: 4700,
@@ -33,6 +36,7 @@ export default {
       _id: 3,
       name:
         "Pisang Fresh Mulus Warna Kuning Cerah Dipetik Dari Perkebunan Pribadi",
+      type: "fruit",
       quantity: 1,
       unit: "buah",
       price: 10000,
@@ -44,6 +48,7 @@ export default {
     {
       _id: 4,
       name: "Timun",
+      type: "vegetable",
       quantity: 250,
       unit: "gram",
       price: 9700,
@@ -52,6 +57,7 @@ export default {
     {
       _id: 5,
       name: "Raspberry",
+      type: "fruit",
       quantity: 500,
       unit: "gram",
       price: 37900,

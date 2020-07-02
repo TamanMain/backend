@@ -12,6 +12,16 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/search", (req, res) => {
+  const p = req.query.p;
+  if (p) {
+    const products = data.products.filter((product) => product.type == p);
+    res.json(products);
+  } else {
+    res.json(data);
+  }
+});
+
 app.get("/products", (req, res) => {
   res.json(data);
 });
