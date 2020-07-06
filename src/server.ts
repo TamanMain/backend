@@ -12,6 +12,15 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/p/:id", (req, res) => {
+  const product = data.products.find((p) => p._id === req.params.id);
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404);
+  }
+});
+
 app.get("/search", (req, res) => {
   const p = req.query.p;
   if (p) {
@@ -23,6 +32,10 @@ app.get("/search", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
+  res.json(data);
+});
+
+app.get("/favorite", (req, res) => {
   res.json(data);
 });
 
