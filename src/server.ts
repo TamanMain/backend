@@ -1,12 +1,39 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import config from "./config";
 import data from "./data/data";
+
+import userRoute from "./user/route";
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
+const mongodbUrl = config.MONGODB_URL;
+mongoose
+  .connect(mongodbUrl, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
+  .catch((error) => console.log(error.reason));
+
+mongoose.connection.once("open", () => {
+  console.log(
+    `MongoDB database connection established successfully at ${mongodbUrl}`
+  );
+});
+
 app.use(cors());
 app.use(express.json());
+
+// API Routes
+app.use("/users", userRoute);
+
+// OLD CODE
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
