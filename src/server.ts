@@ -12,9 +12,8 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-const mongodbUrl = config.MONGODB_URL;
 mongoose
-  .connect(mongodbUrl, {
+  .connect(config.MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -22,9 +21,7 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 mongoose.connection.once("open", () => {
-  console.log(
-    `MongoDB database connection established successfully at ${mongodbUrl}`
-  );
+  console.log("MongoDB database connection established successfully");
 });
 
 app.use(cors());
