@@ -1,4 +1,20 @@
 export default {
+  users: [
+    {
+      _id: "raja@gmail.com",
+      email: "raja@gmail.com",
+      password: "raja",
+      name: "Raja Parsaulian B",
+      isAdmin: true,
+    },
+    {
+      _id: "ana@gmail.com",
+      email: "ana@gmail.com",
+      password: "ana",
+      name: "Ana Mariana",
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       _id: "0",
