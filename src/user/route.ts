@@ -29,9 +29,13 @@ userRoute.post("/login", async (req, res) => {
   const loginUser = await User.findOne(query, projection);
 
   if (loginUser) {
-    res.status(200).json({ user: loginUser, token: getToken(loginUser) });
+    res.status(200).json({
+      name: loginUser.name,
+      email: loginUser.email,
+      token: getToken(loginUser),
+    });
   } else {
-    res.status(404).send({ error: "Wrong email or password!" });
+    res.status(401).send({ error: "Wrong email or password!" });
   }
 });
 
