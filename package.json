@@ -25,5 +25,8 @@
     "@types/node": "^14.0.14",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.5"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
