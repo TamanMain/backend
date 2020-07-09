@@ -4,9 +4,10 @@ import helmet from "helmet";
 import cors from "cors";
 import mongoose from "mongoose";
 import config from "./config";
-import data from "./data/data";
 
-import userRoute from "./user/route";
+import Product, { ProductDocument } from "./data/products/model";
+
+import userRoute from "./data/user/route";
 
 dotenv.config();
 
@@ -38,8 +39,8 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/p/:id", (req, res) => {
-  const product = data.products.find((p) => p._id === req.params.id);
+app.get("/p/:id", async (req, res) => {
+  const product = await Product.findOne({ _id: req.params.id });
   if (product) {
     res.json(product);
   } else {
@@ -47,22 +48,27 @@ app.get("/p/:id", (req, res) => {
   }
 });
 
-app.get("/search", (req, res) => {
-  const p = req.query.p;
-  if (p) {
-    const products = data.products.filter((product) => product.type == p);
-    res.json(products);
+app.get("/search", async (req, res) => {
+  const searchQueries = req.query.p;
+  if (searchQueries) {
+    const query = {
+      _id: searchQueries,
+    };
+    const products = await Product.find(query);
+    res.json({ products: products });
   } else {
-    res.json(data);
+    res.json({ error: "Search parameters is required" });
   }
 });
 
-app.get("/products", (req, res) => {
-  res.json(data);
+app.get("/products", async (req, res) => {
+  const products = await Product.find();
+  res.json({ products: products });
 });
 
-app.get("/favorite", (req, res) => {
-  res.json(data);
+app.get("/favorite", async (req, res) => {
+  const products = await Product.find();
+  res.json({ products: products });
 });
 
 app.listen(port, () => {
