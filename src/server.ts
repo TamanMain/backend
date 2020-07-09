@@ -65,17 +65,6 @@ app.get("/favorite", (req, res) => {
   res.json(data);
 });
 
-app.post("/login", (req, res) => {
-  const user = data.users.find(
-    (user) => user._id === req.body.email && user.password === req.body.password
-  );
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(404).json({ error: "Wrong email or password" });
-  }
-});
-
 app.listen(port, () => {
   console.log(`Backend server is started on port ${port}.`);
 });
