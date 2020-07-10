@@ -33,6 +33,10 @@ productRoute.get("/:id", async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id });
     if (product) {
+      product.statistics.views = product.statistics.views + 1;
+      await product.save((err) => {
+        if (err) console.error(err);
+      });
       const data = new ResponseData();
       data.items = [product];
       data.size = 1;
