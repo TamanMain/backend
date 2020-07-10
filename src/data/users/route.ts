@@ -29,7 +29,7 @@ userRoute.post("/login", async (req, res) => {
   const loginUser = await User.findOne(query, projection);
 
   if (loginUser) {
-    res.status(200).json({
+    res.json({
       name: loginUser.name,
       email: loginUser.email,
       token: getToken(loginUser),

@@ -5,9 +5,10 @@ import cors from "cors";
 import mongoose from "mongoose";
 import config from "./config";
 
-import Product, { ProductDocument } from "./data/products/model";
+import userRoute from "./data/users/route";
+import productRoute from "./data/products/route";
 
-import userRoute from "./data/user/route";
+import Product from "./data/products/model";
 
 dotenv.config();
 
@@ -32,20 +33,12 @@ mongoose.connection.once("open", () => {
 
 // API Routes
 app.use("/users", userRoute);
+app.use("/products", productRoute);
 
 // OLD CODE
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-});
-
-app.get("/p/:id", async (req, res) => {
-  const product = await Product.findOne({ _id: req.params.id });
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404).json({ error: "No product with id " + req.params.id });
-  }
 });
 
 app.get("/search", async (req, res) => {
@@ -59,11 +52,6 @@ app.get("/search", async (req, res) => {
   } else {
     res.json({ error: "Search parameters is required" });
   }
-});
-
-app.get("/products", async (req, res) => {
-  const products = await Product.find();
-  res.json({ products: products });
 });
 
 app.get("/favorite", async (req, res) => {
