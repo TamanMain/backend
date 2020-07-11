@@ -28,11 +28,13 @@ export class ResponseData {
 export function responseSuccess(
   req: RequestOptions,
   message?: string,
-  data?: ResponseData
+  data?: object[]
 ): ResponseTemplate {
   const response = new ResponseTemplate(req);
   response.message = message;
-  response.data = data;
+  response.data = new ResponseData();
+  response.data.items = data;
+  response.data.size = data?.length;
   return response;
 }
 

@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import config from "./config";
 
 import userRoute from "./data/users/route";
+import categoryRoute from "./data/categories/route";
 import productRoute from "./data/products/route";
 
 import Product from "./data/products/model";
@@ -31,6 +32,7 @@ mongoose.connection.once("open", () => {
 
 // API Routes
 app.use("/users", userRoute);
+app.use("/categories", categoryRoute);
 app.use("/products", productRoute);
 
 // OLD CODE
