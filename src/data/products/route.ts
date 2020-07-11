@@ -1,35 +1,51 @@
 import express from "express";
 import Product from "./model";
-import ResponseTemplate, { ResponseData } from "./../../responses/Template";
+import { isAuth } from "../../utils/token";
+import {
+  ResponseData,
+  responseFail,
+  responseSuccess,
+} from "./../../responses/Template";
 
 const productRoute = express.Router();
 
-productRoute.get("/", async (req, res) => {
-  const response = new ResponseTemplate();
-  response.links.self =
-    req.protocol + "://" + req.get("host") + req.originalUrl;
-
+productRoute.post("/", isAuth, async (req, res) => {
   try {
     const products = await Product.find();
     if (products) {
       const data = new ResponseData();
       data.items = products;
       data.size = products.length;
-      response.data = data;
+      res.json(responseSuccess(req, "Products", data));
+    } else {
+      const resFail = responseFail(req, "No product found");
+      res.status(404).json(resFail);
     }
-    res.json(response);
   } catch {
-    response.success = false;
-    response.message = "No product found";
-    res.status(404).json(response);
+    const resFail = responseFail(req, "No product found");
+    res.status(404).json(resFail);
+  }
+});
+
+productRoute.get("/", async (req, res) => {
+  try {
+    const products = await Product.find();
+    if (products) {
+      const data = new ResponseData();
+      data.items = products;
+      data.size = products.length;
+      res.json(responseSuccess(req, "Products", data));
+    } else {
+      const resFail = responseFail(req, "No product found");
+      res.status(404).json(resFail);
+    }
+  } catch {
+    const resFail = responseFail(req, "No product found");
+    res.status(404).json(resFail);
   }
 });
 
 productRoute.get("/:id", async (req, res) => {
-  const response = new ResponseTemplate();
-  response.links.self =
-    req.protocol + "://" + req.get("host") + req.originalUrl;
-
   try {
     const product = await Product.findOne({ _id: req.params.id });
     if (product) {
@@ -37,16 +53,18 @@ productRoute.get("/:id", async (req, res) => {
       await product.save((err) => {
         if (err) console.error(err);
       });
+
       const data = new ResponseData();
       data.items = [product];
       data.size = 1;
-      response.data = data;
+      res.json(responseSuccess(req, "Product", data));
+    } else {
+      const resFail = responseFail(req, "No product found");
+      res.status(404).json(resFail);
     }
-    res.json(response);
   } catch {
-    response.success = false;
-    response.message = "No product with id " + req.params.id;
-    res.status(404).json(response);
+    const resFail = responseFail(req, "No product with id " + req.params.id);
+    res.status(404).json(resFail);
   }
 });
 
