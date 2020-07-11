@@ -7,6 +7,7 @@ import config from "./config";
 import userRoute from "./data/users/route";
 import categoryRoute from "./data/categories/route";
 import productRoute from "./data/products/route";
+import searchRoute from "./data/search/route";
 
 import Product from "./data/products/model";
 
@@ -34,24 +35,12 @@ mongoose.connection.once("open", () => {
 app.use("/users", userRoute);
 app.use("/categories", categoryRoute);
 app.use("/products", productRoute);
+app.use("/search", searchRoute);
 
 // OLD CODE
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-});
-
-app.get("/search", async (req, res) => {
-  const searchQueries = req.query.p;
-  if (searchQueries) {
-    const query = {
-      _id: searchQueries,
-    };
-    const products = await Product.find(query);
-    res.json({ products: products });
-  } else {
-    res.json({ error: "Search parameters is required" });
-  }
 });
 
 app.get("/favorite", async (req, res) => {
