@@ -23,8 +23,8 @@ productRoute.post("/", isAuth, async (req, res) => {
 productRoute.get("/", async (req, res) => {
   try {
     const products = await Product.find();
-    if (products) {
-      res.json(responseSuccess(req, "Products", products));
+    if (products.length > 0) {
+      res.json(responseSuccess(req, "Product list", products));
     } else {
       const resFail = responseFail(req, "No product found");
       res.status(404).json(resFail);
